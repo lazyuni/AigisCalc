@@ -4,8 +4,8 @@
 <title>アイギス収集進捗どうですか？-ミッション情報入力画面-</title>
 <link rel="stylesheet" href="lib/handsontable.full.min.css" />
 <script src="lib/handsontable.full.min.js"></script>
+<script src="predata.js"></script>
 <script src="aigisImput.js"></script>
-
 </head>
 <style>
 #exportArea
@@ -13,17 +13,45 @@
 	border:1px solid gray;
 	border-top: 2px solid gray;
 	border-left:2px solid gray;
-	display:none;
+	width:100%;
+	height:150px;
 }
-#exportDiscript
+#exportPopup
 {
+	width:60%;
+	margin-left:20%;
+	position:absolute;
+	z-index: 10;
 	display:none;
+	background-color:white;
+	padding:10px;
+}
+#bgArea
+{
+	position:absolute;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+	z-index: 5;
+	display:none;
+	background-color:rgba(0,0,0,0.5);
 }
 </style>
 <body>
 <h1>ミッション情報入力画面</h1>
 <form>
-<input type="button" id="clearData" value="クリア" />
+<div id="bgArea"></div>
+<input id="exportBtn" type="button" value="エクスポート"  />
+<br>
+<select id="missionList" /><input type="button" id="missionApply" value="セット" />
+<div id="exportPopup">
+	<span id="exportDiscript">以下をコピーして、進捗情報画面でインポートしてください。</span>
+	<input type="button" id="copyClipboad" value="クリップボードにコピー" />
+	<textarea id="exportArea"></textarea>
+</div>
+<a href="aigiscalc.html">進捗情報画面</a>
+
 <dl>
 	<dt>イベント期間</dt>
 	<dd><input type="date" name="dateFrom" id="dateFrom">～<input type="date" name="dateTo" id="dateTo"></dd>
@@ -31,10 +59,7 @@
 いずれかのセルを選択した状態で、選択セルの右下部分を下へドラッグすると行を増やせます。減らせません。
 <div id="grid"></div>
 <div id="targetList"></div>
-<input id="exportBtn" type="button" value="エクスポート"  />
-<span id="exportDiscript">以下をコピーして、計算機に貼り付けてください。</span>
-<div id="exportArea"></div>
-<a href="aigiscalc.html">進捗情報画面</a>
+<input type="button" id="clearData" value="オールクリア" />
 </form>
 </body>
 </html>

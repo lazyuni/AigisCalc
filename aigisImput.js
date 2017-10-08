@@ -1,10 +1,11 @@
 
-var mapData_;
-var targetList_;
+var mapData;
+var targetList;
 var storage = localStorage;
 
 var tableMap;
 var tableTarget;
+
 
 var BAR_MAX_WIDTH = 1000;
 
@@ -44,9 +45,18 @@ function exportData()
 	}
 	obj.targetList = targetList;
 	document.querySelector("#exportArea").innerHTML = JSON.stringify(obj);
-	document.querySelector("#exportArea").style.display="block";
-	document.querySelector("#exportDiscript").style.display="inline";
+	showExportPopup();
 	
+}
+function showExportPopup()
+{
+	document.querySelector("#exportPopup").style.display="block";
+	document.querySelector("#bgArea").style.display="block";
+}
+function closeExportPopup()
+{
+	document.querySelector("#exportPopup").style.display="none";
+	document.querySelector("#bgArea").style.display="none";
 }
 function clearData()
 {
@@ -61,61 +71,105 @@ function mapClear()
 	storage.removeItem('mapData');
 	storage.removeItem('targetList');
 }
+function setMissionList()
+{
+	
+	var parentElm = document.querySelector('#missionList');
+	for(let i = 0; i < preData.length; i++)
+	{
+		var elm = document.createElement("option");
+		elm.setAttribute("value", i);
+		elm.innerHTML = preData[i].title;
+		parentElm.appendChild(elm);
+	}
+}
+function applyMissionData()
+{
+	var val = document.querySelector('#missionList').value;
+	var data = JSON.parse(preData[val].data);
+	
+	storage.setItem('dateFrom', data.dateFrom);
+	storage.setItem('dateTo', data.dateTo);
+	storage.setItem('mapData', JSON.stringify(data.mapData));
+	storage.setItem('targetList', JSON.stringify(data.targetList));
+	
+	init();
+}
+function copyClipboad()
+{
+	var temp = document.querySelector("#exportArea");
+	temp.selectionStart = 0;
+	temp.selectionEnd = temp.innerHTML.length;
+	temp.focus();
+	document.execCommand('copy');
+}
+
 function init()
 {
+	setMissionList();
+	
+	var grid = document.querySelector("#grid");
+	grid.innerHTML = "";
+	var targetListElm = document.querySelector("#targetList");
+	targetListElm.innerHTML = "";
+
+
 	document.querySelector("#dateFrom").onblur = itemChange1;
 	document.querySelector("#dateTo").onblur = itemChange1;
 	document.querySelector("#exportBtn").onclick = exportData;
-	document.querySelector("#clearData").onclick = mapClear;
+	document.querySelector("#clearData").onclick = clearData;
+	document.querySelector("#missionApply").onclick = applyMissionData;
+	document.querySelector("#bgArea").onclick = closeExportPopup;
+	document.querySelector("#copyClipboad").onclick = copyClipboad;
+	
 
 	document.querySelector("#dateFrom").value = storage.getItem('dateFrom');
 	document.querySelector("#dateTo").value = storage.getItem('dateTo');
 
-	mapData_ = storage.getItem('mapData');
-	if(mapData_ == null || mapData_.length == 0)
+	mapData = storage.getItem('mapData');
+	if(mapData == null || mapData.length == 0)
 	{
-		mapData_ = [
+		mapData = [
 			[,,,,,,,,,]
 		];
 	}
 	else
 	{
-		mapData_ = JSON.parse(mapData_);
+		mapData = JSON.parse(mapData);
 	}
 	
-	targetList_= storage.getItem('targetList');
-	if(targetList_ == null || targetList_.length == 0)
+	targetList= storage.getItem('targetList');
+	if(targetList == null || targetList.length == 0)
 	{
-		targetList_ = [
+		targetList = [
 			[,]
 		];
 	}
 	else
 	{
-		targetList_ = JSON.parse(targetList_);
+		targetList = JSON.parse(targetList);
 	}
 
-	document.getElementById("grid");
 	tableMap = new Handsontable(grid, {
-		data: mapData_,
+		data: mapData,
 		columns : mapColumns,
 		colHeaders: mapHeaders,
 		readOnly:false,
 		cells: function(row, col, prop) {
-			storage.setItem("mapData", JSON.stringify(mapData_));
+			storage.setItem("mapData", JSON.stringify(mapData));
 			
 		    var cellProperties = {};
 		    return cellProperties;
 		}
 	});
 	
-	tableTarget = new Handsontable(document.getElementById('targetList'),{
-		data: targetList_,
+	tableTarget = new Handsontable(targetListElm,{
+		data: targetList,
 		columns : tarColumns,
 		colHeaders: tarHeaders,
 		readOnly:false,
 		cells: function(row, col, prop) {
-			storage.setItem("targetList", JSON.stringify(targetList_));
+			storage.setItem("targetList", JSON.stringify(targetList));
 			
 		    var cellProperties = {};
 		    return cellProperties;
