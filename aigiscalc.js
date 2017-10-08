@@ -187,6 +187,8 @@ function importOK()
 	storage.setItem("mapData",  JSON.stringify(mapData));
 	storage.setItem("targetList",  JSON.stringify(targetList));
 	
+	document.getElementById("targetList").innerHTML = "";
+
 	init();
 
 	dialogClose();
@@ -209,7 +211,6 @@ function dialogClose()
 	document.querySelector("#targetList").style.display = 'none';
 	document.querySelector("#importForm").style.display = 'none';
 }
-
 
 function init()
 {
