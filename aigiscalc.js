@@ -123,19 +123,6 @@ function recalc()
 }
 
 
-
-function makeTargetList_()
-{
-	if(targetList == null) return;
-	var options = "";
-	for(let i = 0; i < targetList.length; i++)
-	{
-		options += "<li value='"+ targetList[i][0] + "'>" +targetList[i][0] +" "+ targetList[i][1]+"</li>";
-	}
-	
-	document.getElementById("targetList").innerHTML = options;
-}
-
 function makeTargetList()
 {
 	if(targetList == null) return;
@@ -207,18 +194,18 @@ function importOK()
 function showTargetList()
 {
 	document.querySelector("#targetList").style.display = 'block';
-	document.querySelector("#importArea").style.display = 'block';
+	document.querySelector("#bgArea").style.display = 'block';
 
 }
 function importClick()
 {
-	document.querySelector("#importArea").style.display = 'block';
+	document.querySelector("#bgArea").style.display = 'block';
 	document.querySelector("#importForm").style.display = 'block';
 }
 
 function dialogClose()
 {
-	document.querySelector("#importArea").style.display = 'none';
+	document.querySelector("#bgArea").style.display = 'none';
 	document.querySelector("#targetList").style.display = 'none';
 	document.querySelector("#importForm").style.display = 'none';
 }
@@ -276,7 +263,7 @@ function init()
 	document.querySelector("#isAutoRecovery").onblur = itemChangeCheck;
 	document.querySelector("#isAutoRecovery").onclick = itemChangeCheck;
 	document.querySelector("#importBtn").onclick = importClick;
-	document.querySelector("#importArea").onclick = dialogClose;
+	document.querySelector("#bgArea").onclick = dialogClose;
 	document.querySelector("#importOK").onclick = importOK;
 	document.querySelector("#importCancel").onclick = dialogClose;
 
