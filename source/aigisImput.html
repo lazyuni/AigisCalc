@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>アイギス収集進捗どうですか？-ミッション情報入力画面-</title>
+<link rel="stylesheet" href="lib/handsontable.full.min.css" />
+<script src="lib/handsontable.full.min.js"></script>
+<script src="aigisImput.js"></script>
+
+</head>
+<style>
+#exportArea
+{
+	border:1px solid gray;
+	border-top: 2px solid gray;
+	border-left:2px solid gray;
+	display:none;
+}
+#exportDiscript
+{
+	display:none;
+}
+</style>
+<body>
+<h1>ミッション情報入力画面</h1>
+<form>
+<input type="button" id="clearData" value="クリア" />
+<dl>
+	<dt>イベント期間</dt>
+	<dd><input type="date" name="dateFrom" id="dateFrom">～<input type="date" name="dateTo" id="dateTo"></dd>
+</dl>
+いずれかのセルを選択した状態で、選択セルの右下部分を下へドラッグすると行を増やせます。減らせません。
+<div id="grid"></div>
+<div id="targetList"></div>
+<input id="exportBtn" type="button" value="エクスポート"  />
+<span id="exportDiscript">以下をコピーして、計算機に貼り付けてください。</span>
+<div id="exportArea"></div>
+<a href="aigiscalc.html">進捗情報画面</a>
+</form>
+</body>
+</html>
