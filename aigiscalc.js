@@ -23,8 +23,8 @@ function recalc()
 	//目標値
 	var targetVal = document.querySelector("#targetVal").value;
 	//イベント期間
-	var dateFrom = document.querySelector("#dateFrom").value;
-	var dateTo = document.querySelector("#dateTo").value;
+	var dateFrom = document.querySelector("#dateFrom").innerHTML;
+	var dateTo = document.querySelector("#dateTo").innerHTML;
 
 	var nowDate = new Date();
 	var startDate = new Date(dateFrom);
@@ -53,6 +53,14 @@ function recalc()
 		progressNow.style.width = (progVal * BAR_MAX_WIDTH) + "px";
 	}
 	progressNow.innerHTML = ""+Math.round(progVal * 100) + "%達成";
+	
+	//残り時間(秒)
+	var shortageSec = (endDate.getTime() - nowDate.getTime()) / 1000;
+	
+	//いまのペースだと
+	var pace = (nowVal / tarSec) * shortageSec;
+	pace = Math.floor(pace) + (nowVal-0);
+	document.querySelector("#pace").innerHTML = pace;
 	
 	
 	//王子ランク(index)
@@ -119,7 +127,14 @@ function recalc()
 	var consumCount = consumStamina + consumCharisma;
 	document.querySelector("#consumCount").innerHTML = consumCount;
 	
-	
+	//一日あたりのノルマ
+	//石数
+	var normaCount = shortageVal / (shortageSec / (3600 * 24));
+	document.querySelector("#normaCount").innerHTML = Math.ceil(normaCount);
+	//周回数
+	var normaAround = normaCount / exp;
+	document.querySelector("#normaAround").innerHTML = Math.ceil(normaAround);
+
 }
 
 
@@ -255,8 +270,6 @@ function init()
 	 
 	document.querySelector("#dateFrom").onblur = itemChange1;
 	document.querySelector("#dateFrom").onchange = itemChange1;
-	document.querySelector("#dateTo").onblur = itemChange1;
-	document.querySelector("#dateTo").onchange = itemChange1;
 	document.querySelector("#princeRank").onblur = itemChange1;
 	document.querySelector("#princeRank").onchange = itemChange1;
 	document.querySelector("#aroundMap").onblur = itemChange1;
@@ -270,11 +283,14 @@ function init()
 
 	document.querySelector("#nowVal").value = storage.getItem('nowVal');
 	document.querySelector("#targetVal").value = storage.getItem('targetVal');
-	document.querySelector("#dateFrom").value = storage.getItem('dateFrom');
-	document.querySelector("#dateTo").value = storage.getItem('dateTo');
 	document.querySelector("#princeRank").value = storage.getItem('princeRank');
 	document.querySelector("#aroundMap").value = storage.getItem('aroundMap');
 	document.querySelector("#isAutoRecovery").checked = storage.getItem('isAutoRecovery');
+
+	var sdate = storage.getItem('dateFrom');
+	document.querySelector("#dateFrom").innerHTML = sdate.replace('-','/');
+	sdate = storage.getItem('dateTo');
+	document.querySelector("#dateTo").innerHTML = sdate.replace('-','/');
 
 	document.getElementById("grid");
 	new Handsontable(grid, {
