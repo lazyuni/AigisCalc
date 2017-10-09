@@ -226,6 +226,15 @@ function dialogClose()
 	document.querySelector("#targetList").style.display = 'none';
 	document.querySelector("#importForm").style.display = 'none';
 }
+function helpClose()
+{
+	var parent = this.parentNode;
+	parent.style.display = 'none';
+}
+function helpOpen()
+{
+	document.querySelector("#help").style.display = 'block';
+}
 
 function init()
 {
@@ -280,6 +289,8 @@ function init()
 	document.querySelector("#bgArea").onclick = dialogClose;
 	document.querySelector("#importOK").onclick = importOK;
 	document.querySelector("#importCancel").onclick = dialogClose;
+	document.querySelector("#helpClose").onclick = helpClose;
+	document.querySelector("#helpOpen").onclick = helpOpen;
 
 	document.querySelector("#nowVal").value = storage.getItem('nowVal');
 	document.querySelector("#targetVal").value = storage.getItem('targetVal');
