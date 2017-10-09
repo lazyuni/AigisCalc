@@ -41,12 +41,21 @@
 {
 	position:absolute;
 	top:0;
-	right:10px;
+	right:0;
 	width:30%;
 	background-color:white;
 	border:1px solid gray;
+	display:none;
 }
-
+.helpBtn
+{
+	position:absolute;
+	top:0;
+	right:0;
+	border:1px solid gray;
+	background-color: #cccccc;
+	z-index:5;
+}
 </style>
 <body>
 <h1>ミッション情報入力画面</h1>
@@ -81,7 +90,9 @@
 </dl>
 <input type="button" id="clearData" value="オールクリア" />
 </form>
+<div class="helpBtn" id="helpOpen">Help</div>
 <div id="help">
+<div class="helpBtn" id="helpClose">Close</div>
 <h3>使い方</h3>
 <ol>
 	<li>プリセットのミッション一覧に目的のミッションがある場合は、そのミッションを選択して[プリセット]ボタンを押します。</li>

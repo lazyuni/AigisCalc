@@ -103,7 +103,15 @@ function copyClipboad()
 	temp.focus();
 	document.execCommand('copy');
 }
-
+function helpClose()
+{
+	var parent = this.parentNode;
+	parent.style.display = 'none';
+}
+function helpOpen()
+{
+	document.querySelector("#help").style.display = 'block';
+}
 function init()
 {
 	setMissionList();
@@ -121,6 +129,8 @@ function init()
 	document.querySelector("#missionApply").onclick = applyMissionData;
 	document.querySelector("#bgArea").onclick = closeExportPopup;
 	document.querySelector("#copyClipboad").onclick = copyClipboad;
+	document.querySelector("#helpClose").onclick = helpClose;
+	document.querySelector("#helpOpen").onclick = helpOpen;
 	
 
 	document.querySelector("#dateFrom").value = storage.getItem('dateFrom');

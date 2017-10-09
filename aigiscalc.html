@@ -68,11 +68,22 @@
 {
 	position:absolute;
 	top:0;
-	right:10px;
+	right:0;
 	width:30%;
 	background-color:white;
 	border:1px solid gray;
+	display:none;
 }
+.helpBtn
+{
+	position:absolute;
+	top:0;
+	right:0;
+	border:1px solid gray;
+	background-color: #cccccc;
+	z-index:5;
+}
+
 </style>
 </head>
 <body>
@@ -133,7 +144,9 @@
 </table>
 </div>
 </form>
+<div class="helpBtn" id="helpOpen">Help</div>
 <div id="help">
+<div class="helpBtn" id="helpClose">Close</div>
 <h3>使い方</h3>
 <ol>
 	<li>まず最初に一度だけミッションデータをインポートします。<br>
