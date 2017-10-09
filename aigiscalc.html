@@ -64,13 +64,22 @@
 {
 	background-color:#80ffff;
 }
+#help
+{
+	position:absolute;
+	top:0;
+	right:10px;
+	width:30%;
+	background-color:white;
+	border:1px solid gray;
+}
 </style>
 </head>
 <body>
 <h1>アイギス収集進捗どうですか？</h1>
 <form>
 <input type="button" id="importBtn" value="インポート" />
-<a href="aigisImput.html">データ入力画面</a>
+<a href="aigisImput.html">ミッションデータ入力画面</a>
 <div id="bgArea"></div>
 <div id="importForm">
 	<textarea></textarea>
@@ -105,10 +114,10 @@
 
 <dl>
 	<dt>イベント期間</dt>
-	<dd><input type="date" name="dateFrom" id="dateFrom">～<input type="date" name="dateTo" id="dateTo"></dd>
+	<dd><span id="dateFrom"></span>～<span id="dateTo"></span></dd>
 </dl>
 <div id="progerssArea">
-	進捗
+	進捗(今のペースだと最終日までに<span id="pace"></span>個)
 	<div id="progressMax"></div>
 	<div id="progressNow"></div>
 </div>
@@ -120,8 +129,21 @@
 <table>
 <tr><td>消費結晶</td><td><span id="consumCount"></span>個(カリスマx<span id="consumCharisma"></span>/スタミナx<span id="consumStamina"></span>)</td></tr>
 <tr><td>残り周回数</td><td><span id="estimateAround"></span>周</td></tr>
+<tr><td>一日辺りのノルマ</td><td><span id="normaCount"></span>個 / <span id="normaAround"></span>周</td></tr>
 </table>
 </div>
 </form>
+<div id="help">
+<h3>使い方</h3>
+<ol>
+	<li>まず最初に一度だけミッションデータをインポートします。<br>
+	ミッションデータを自分で作成する場合は<a href="aigisImput.html">[ミッションデータ入力画面]</a>へ。<br>
+	ミッションデータが手元にある場合は[インポート]ボタンを押して、ミッションデータを貼り付けてから[OK]ボタンを押してください。</li>
+	<li>「目標値」「王子ランク」「周回マップ」を指定します。<br>
+	「目標値」をダブルクリックで報酬一覧から選択できます。</li>
+	<li>任意のタイミングで「現在の個数」を入力して進捗を確認します。</li>
+</ol>
+</div>
+
 </body>
 </html>

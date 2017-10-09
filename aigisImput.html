@@ -37,6 +37,16 @@
 	display:none;
 	background-color:rgba(0,0,0,0.5);
 }
+#help
+{
+	position:absolute;
+	top:0;
+	right:10px;
+	width:30%;
+	background-color:white;
+	border:1px solid gray;
+}
+
 </style>
 <body>
 <h1>ミッション情報入力画面</h1>
@@ -44,7 +54,7 @@
 <div id="bgArea"></div>
 <input id="exportBtn" type="button" value="エクスポート"  />
 <br>
-<select id="missionList" /><input type="button" id="missionApply" value="セット" />
+<select id="missionList" /><input type="button" id="missionApply" value="プリセット" />
 <div id="exportPopup">
 	<span id="exportDiscript">以下をコピーして、進捗情報画面でインポートしてください。</span>
 	<input type="button" id="copyClipboad" value="クリップボードにコピー" />
@@ -56,10 +66,34 @@
 	<dt>イベント期間</dt>
 	<dd><input type="date" name="dateFrom" id="dateFrom">～<input type="date" name="dateTo" id="dateTo"></dd>
 </dl>
-いずれかのセルを選択した状態で、選択セルの右下部分を下へドラッグすると行を増やせます。減らせません。
-<div id="grid"></div>
-<div id="targetList"></div>
+<dl>
+	<dt>ミッション情報</td>
+	<dd>
+		いずれかのセルを選択した状態で、選択セルの右下部分を下へドラッグすると行を増やせます。
+		<div id="grid"></div>
+	</dd>
+</dl>
+<dl>
+	<dt>報酬情報</dt>
+	<dd>
+		<div id="targetList"></div>
+	</dd>
+</dl>
 <input type="button" id="clearData" value="オールクリア" />
 </form>
+<div id="help">
+<h3>使い方</h3>
+<ol>
+	<li>プリセットのミッション一覧に目的のミッションがある場合は、そのミッションを選択して[プリセット]ボタンを押します。</li>
+	<li>イベント期間を入力します。</li>
+	<li>ミッション情報を入力します。<br>
+	セル選択状態で、選択セルの左下あたりをドラッグしたまま下に移動させると行が増えます。<br>
+	MAP列が空の行はリロードすると消えます。
+	<li>報酬情報を入力します（必須ではありません）<br>
+	入力方法はミッション情報と同じです。
+	<li>入力し終えたら[エクスポート]ボタンを押すと、ミッションデータが表示されるのでコピーしてください。</li>
+	<li><a href="aigiscalc.html">進捗情報画面</a>の[インポート]で、コピーしたミッションデータを貼り付けてください。</li>
+</ol>
+</div>
 </body>
 </html>
