@@ -35,7 +35,7 @@ function exportData()
 		}
 	}
 	obj.mapData = mapData;
-	var targetList = JSON.parse(storage.getItem('targetList'));
+	var targetList = JSON.parse(storage.getItem('rewardGrid'));
 	for(var i = targetList.length-1 ; i >= 0; i--)
 	{
 		if(targetList[i][0] == null)
@@ -44,32 +44,32 @@ function exportData()
 		}
 	}
 	obj.targetList = targetList;
-	document.querySelector("#exportArea").innerHTML = JSON.stringify(obj);
+	document.querySelector('#exportArea').innerHTML = JSON.stringify(obj);
 	showExportPopup();
 	
 }
 function showExportPopup()
 {
-	document.querySelector("#exportPopup").style.display="block";
-	document.querySelector("#bgArea").style.display="block";
+	document.querySelector('#exportPopup').style.display="block";
+	document.querySelector('#bgArea').style.display="block";
 }
 function closeExportPopup()
 {
-	document.querySelector("#exportPopup").style.display="none";
-	document.querySelector("#bgArea").style.display="none";
+	document.querySelector('#exportPopup').style.display="none";
+	document.querySelector('#bgArea').style.display="none";
 }
 function clearData()
 {
 	storage.removeItem('dateFrom');
 	storage.removeItem('dateTo');
 	storage.removeItem('mapData');
-	storage.removeItem('targetList');
+	storage.removeItem('rewardGrid');
 	init();
 }
 function mapClear()
 {
 	storage.removeItem('mapData');
-	storage.removeItem('targetList');
+	storage.removeItem('rewardGrid');
 }
 function setMissionList()
 {
@@ -91,13 +91,13 @@ function applyMissionData()
 	storage.setItem('dateFrom', data.dateFrom);
 	storage.setItem('dateTo', data.dateTo);
 	storage.setItem('mapData', JSON.stringify(data.mapData));
-	storage.setItem('targetList', JSON.stringify(data.targetList));
+	storage.setItem('rewardGrid', JSON.stringify(data.targetList));
 	
 	init();
 }
 function copyClipboad()
 {
-	var temp = document.querySelector("#exportArea");
+	var temp = document.querySelector('#exportArea');
 	temp.selectionStart = 0;
 	temp.selectionEnd = temp.innerHTML.length;
 	temp.focus();
@@ -110,31 +110,31 @@ function helpClose()
 }
 function helpOpen()
 {
-	document.querySelector("#help").style.display = 'block';
+	document.querySelector('#help').style.display = 'block';
 }
 function init()
 {
 	setMissionList();
 	
-	var grid = document.querySelector("#grid");
+	var grid = document.querySelector('#grid');
 	grid.innerHTML = "";
-	var targetListElm = document.querySelector("#targetList");
+	var targetListElm = document.querySelector('#rewardGrid');
 	targetListElm.innerHTML = "";
 
 
-	document.querySelector("#dateFrom").onblur = itemChange1;
-	document.querySelector("#dateTo").onblur = itemChange1;
-	document.querySelector("#exportBtn").onclick = exportData;
-	document.querySelector("#clearData").onclick = clearData;
-	document.querySelector("#missionApply").onclick = applyMissionData;
-	document.querySelector("#bgArea").onclick = closeExportPopup;
-	document.querySelector("#copyClipboad").onclick = copyClipboad;
-	document.querySelector("#helpClose").onclick = helpClose;
-	document.querySelector("#helpOpen").onclick = helpOpen;
+	document.querySelector('#dateFrom').onblur = itemChange1;
+	document.querySelector('#dateTo').onblur = itemChange1;
+	document.querySelector('#exportBtn').onclick = exportData;
+	document.querySelector('#clearData').onclick = clearData;
+	document.querySelector('#missionApply').onclick = applyMissionData;
+	document.querySelector('#bgArea').onclick = closeExportPopup;
+	document.querySelector('#copyClipboad').onclick = copyClipboad;
+	document.querySelector('#helpClose').onclick = helpClose;
+	document.querySelector('#helpOpen').onclick = helpOpen;
 	
 
-	document.querySelector("#dateFrom").value = storage.getItem('dateFrom');
-	document.querySelector("#dateTo").value = storage.getItem('dateTo');
+	document.querySelector('#dateFrom').value = storage.getItem('dateFrom');
+	document.querySelector('#dateTo').value = storage.getItem('dateTo');
 
 	mapData = storage.getItem('mapData');
 	if(mapData == null || mapData.length == 0)
@@ -148,7 +148,7 @@ function init()
 		mapData = JSON.parse(mapData);
 	}
 	
-	targetList= storage.getItem('targetList');
+	targetList= storage.getItem('rewardGrid');
 	if(targetList == null || targetList.length == 0)
 	{
 		targetList = [
@@ -166,7 +166,7 @@ function init()
 		colHeaders: mapHeaders,
 		readOnly:false,
 		cells: function(row, col, prop) {
-			storage.setItem("mapData", JSON.stringify(mapData));
+			storage.setItem('mapData', JSON.stringify(mapData));
 			
 		    var cellProperties = {};
 		    return cellProperties;
@@ -179,7 +179,7 @@ function init()
 		colHeaders: tarHeaders,
 		readOnly:false,
 		cells: function(row, col, prop) {
-			storage.setItem("targetList", JSON.stringify(targetList));
+			storage.setItem('rewardGrid', JSON.stringify(targetList));
 			
 		    var cellProperties = {};
 		    return cellProperties;

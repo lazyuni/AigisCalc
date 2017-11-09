@@ -3,6 +3,11 @@ var storage = localStorage;
 
 var BAR_MAX_WIDTH = 1000;
 
+function $(id)
+{
+	return document.querySelector(id);
+}
+
 function itemChange1()
 {
 	storage.setItem(this.id, this.value);
@@ -19,17 +24,17 @@ function recalc()
 	if(mapData == null) return;
 	if(mapData.length == 0) return;
 	//現在値
-	var nowVal = document.querySelector("#nowVal").value;
+	var nowVal = $("#nowVal").value;
 	//目標値
-	var targetVal = document.querySelector("#targetVal").value;
+	var targetVal = $("#targetVal").value;
 	//イベント期間
-	var dateFrom = document.querySelector("#dateFrom").innerHTML;
-	var dateTo = document.querySelector("#dateTo").innerHTML;
+	var dateFrom = $("#dateFrom").innerHTML;
+	var dateTo = $("#dateTo").innerHTML;
 
 	var nowDate = new Date();
 	var startDate = new Date(dateFrom);
 	var endDate = new Date(dateTo);
-	startDate.setHours(10);
+	startDate.setHours(15);
 	endDate.setHours(10);
 	
 	var maxSec = (endDate.getTime() - startDate.getTime()) / 1000;
@@ -38,21 +43,17 @@ function recalc()
 	var progVal = (curSec / maxSec) ;
 	var progMax = (tarSec / maxSec) ;
 	if(progMax > 1) progMax = 1;
+	if(progVal > 1) progVal = 1;
 	
-	var progressMax = document.querySelector("#progressMax");
+	var progressMax = $("#progressMax");
 	progressMax.style.width = (progMax * BAR_MAX_WIDTH) + "px";
-	progressMax.innerHTML = "" + Math.round(progMax * 100)  + "%経過";
+	var progMaxText = $("#progressMax span");
+	progMaxText.innerHTML = "" + Math.round(progMax * 100)  + "%経過";
 	
-	var progressNow = document.querySelector("#progressNow");
-	if(progVal > 1)
-	{
-		progressNow.style.width = BAR_MAX_WIDTH + "px";
-	}
-	else
-	{
-		progressNow.style.width = (progVal * BAR_MAX_WIDTH) + "px";
-	}
-	progressNow.innerHTML = ""+Math.round(progVal * 100) + "%達成";
+	var progressNow = $("#progressNow");
+	progressNow.style.width = (progVal * BAR_MAX_WIDTH) + "px";
+	var progMaxText = $("#progressNow span");
+	progMaxText.innerHTML = ""+Math.round(progVal * 100) + "%達成";
 	
 	//残り時間(秒)
 	var shortageSec = (endDate.getTime() - nowDate.getTime()) / 1000;
@@ -60,13 +61,13 @@ function recalc()
 	//いまのペースだと
 	var pace = (nowVal / tarSec) * shortageSec;
 	pace = Math.floor(pace) + (nowVal-0);
-	document.querySelector("#pace").innerHTML = pace;
+	$("#pace").innerHTML = pace;
 	
 	
 	//王子ランク(index)
-	var selectedPrinceRankIndex = document.querySelector("#princeRank").value - 0;
+	var selectedPrinceRankIndex = $("#princeRank").value - 0;
 	//選択周回マップ（index)
-	var selectedAroundMapIndex = document.querySelector("#aroundMap").value - 0;
+	var selectedAroundMapIndex = $("#aroundMap").value - 0;
 	
 	//残り時間(h)
 	var remainHour = (endDate.getTime() - nowDate.getTime()) / (1000 * 60 * 60);
@@ -87,7 +88,7 @@ function recalc()
 	var remainingAround = shortageVal / exp;
 	if(exp == 0) remainingAround = 0;
 	remainingAround = Math.ceil(remainingAround);
-	document.querySelector("#estimateAround").innerHTML = remainingAround;
+	$("#estimateAround").innerHTML = remainingAround;
 	
 	
 	//残り周回に必要なスタミナ
@@ -97,7 +98,7 @@ function recalc()
 	var cpra = remainingAround * mapData[selectedAroundMapIndex][2];
 	
 	//自然回復
-	var isAutoRecovery = document.querySelector("#isAutoRecovery").checked;
+	var isAutoRecovery = $("#isAutoRecovery").checked;
 	//残り時間で回復するスタミナ
 	var autoRecSta = remainHour * 1;
 	//残り時間で回復するカリスマ
@@ -117,23 +118,23 @@ function recalc()
 	
 	//残り周回に必要なスタミナを石換算
 	var consumStamina = Math.ceil(spra / princeSta);
-	document.querySelector("#consumStamina").innerHTML = consumStamina;
+	$("#consumStamina").innerHTML = consumStamina;
 	
 	//残り周回に必要なカリスマを石換算
 	var consumCharisma = Math.ceil(cpra / princeChari);
-	document.querySelector("#consumCharisma").innerHTML = consumCharisma;
+	$("#consumCharisma").innerHTML = consumCharisma;
 	
 	//必要な石
 	var consumCount = consumStamina + consumCharisma;
-	document.querySelector("#consumCount").innerHTML = consumCount;
+	$("#consumCount").innerHTML = consumCount;
 	
 	//一日あたりのノルマ
 	//石数
 	var normaCount = shortageVal / (shortageSec / (3600 * 24));
-	document.querySelector("#normaCount").innerHTML = Math.ceil(normaCount);
+	$("#normaCount").innerHTML = Math.ceil(normaCount);
 	//周回数
 	var normaAround = normaCount / exp;
-	document.querySelector("#normaAround").innerHTML = Math.ceil(normaAround);
+	$("#normaAround").innerHTML = Math.ceil(normaAround);
 
 }
 
@@ -141,15 +142,15 @@ function recalc()
 function makeTargetList()
 {
 	if(targetList == null) return;
-	var parentElm = document.querySelector('#targetList');
+	var parentElm = $('#targetList');
 	for(let i = 0; i < targetList.length; i++)
 	{
 		var elm = document.createElement("li");
 		elm.setAttribute("value",targetList[i][0]);
 		elm.innerHTML = targetList[i][0] +" "+ targetList[i][1];
 		elm.addEventListener('click', function(e) {
-			document.querySelector('#targetVal').value = e.target.getAttribute('value');
-			document.querySelector("#targetVal").dispatchEvent(new Event('blur'));
+			$('#targetVal').value = e.target.getAttribute('value');
+			$("#targetVal").dispatchEvent(new Event('blur'));
 			dialogClose();
 		}, false);
 		parentElm.appendChild(elm);
@@ -167,7 +168,7 @@ function makeAroundMapList()
 		options += "<option value='"+ i + "'>" +mapData[i][0] +"("+ mapData[i][2]+"/"+mapData[i][3]+")</option>";
 	}
 	
-	document.getElementById("aroundMap").innerHTML = options;
+	$('#aroundMap').innerHTML = options;
 }
 
 function makePrinceRankList()
@@ -178,12 +179,12 @@ function makePrinceRankList()
 		options += "<option value='"+ i + "'>" +princeRankList[i][0] +"("+ princeRankList[i][1]+"/"+princeRankList[i][2]+")</option>";
 	}
 	
-	document.getElementById("princeRank").innerHTML = options;
+	$('#princeRank').innerHTML = options;
 }
 
 function importOK()
 {
-	var jsn = document.querySelector('#importForm textarea').value;
+	var jsn = $('#importForm textarea').value;
 	var data;
 	try
 	{
@@ -197,12 +198,12 @@ function importOK()
 	mapData = data.mapData;
 	targetList = data.targetList;
 	
-	storage.setItem("dateFrom", data.dateFrom);
-	storage.setItem("dateTo", data.dateTo);
-	storage.setItem("mapData",  JSON.stringify(mapData));
-	storage.setItem("targetList",  JSON.stringify(targetList));
+	storage.setItem('dateFrom', data.dateFrom);
+	storage.setItem('dateTo', data.dateTo);
+	storage.setItem('mapData',  JSON.stringify(mapData));
+	storage.setItem('targetList',  JSON.stringify(targetList));
 	
-	document.getElementById("targetList").innerHTML = "";
+	$('#targetList').innerHTML = "";
 
 	init();
 
@@ -210,21 +211,21 @@ function importOK()
 }
 function showTargetList()
 {
-	document.querySelector("#targetList").style.display = 'block';
-	document.querySelector("#bgArea").style.display = 'block';
+	$('#targetList').style.display = 'block';
+	$('#bgArea').style.display = 'block';
 
 }
 function importClick()
 {
-	document.querySelector("#bgArea").style.display = 'block';
-	document.querySelector("#importForm").style.display = 'block';
+	$('#bgArea').style.display = 'block';
+	$('#importForm').style.display = 'block';
 }
 
 function dialogClose()
 {
-	document.querySelector("#bgArea").style.display = 'none';
-	document.querySelector("#targetList").style.display = 'none';
-	document.querySelector("#importForm").style.display = 'none';
+	$('#bgArea').style.display = 'none';
+	$('#targetList').style.display = 'none';
+	$('#importForm').style.display = 'none';
 }
 function helpClose()
 {
@@ -233,12 +234,12 @@ function helpClose()
 }
 function helpOpen()
 {
-	document.querySelector("#help").style.display = 'block';
+	$('#help').style.display = 'block';
 }
 
 function init()
 {
-	document.getElementById("grid").innerHTML = "";
+	$('#grid').innerHTML = "";
 	
 	mapData = storage.getItem('mapData');
 	if(mapData != null)
@@ -271,39 +272,39 @@ function init()
 	makeTargetList();
 	makeAroundMapList();
 
-	document.querySelector("#nowVal").onblur = itemChange1;
-	document.querySelector("#nowVal").onchange = itemChange1;
-	document.querySelector("#targetVal").onblur = itemChange1;
-	document.querySelector("#targetVal").onchange = itemChange1;
-	document.querySelector("#targetVal").ondblclick = showTargetList;
+	$('#nowVal').onblur = itemChange1;
+	$('#nowVal').onchange = itemChange1;
+	$('#targetVal').onblur = itemChange1;
+	$('#targetVal').onchange = itemChange1;
+	$('#targetVal').ondblclick = showTargetList;
 	 
-	document.querySelector("#dateFrom").onblur = itemChange1;
-	document.querySelector("#dateFrom").onchange = itemChange1;
-	document.querySelector("#princeRank").onblur = itemChange1;
-	document.querySelector("#princeRank").onchange = itemChange1;
-	document.querySelector("#aroundMap").onblur = itemChange1;
-	document.querySelector("#aroundMap").onchange = itemChange1;
-	document.querySelector("#isAutoRecovery").onblur = itemChangeCheck;
-	document.querySelector("#isAutoRecovery").onclick = itemChangeCheck;
-	document.querySelector("#importBtn").onclick = importClick;
-	document.querySelector("#bgArea").onclick = dialogClose;
-	document.querySelector("#importOK").onclick = importOK;
-	document.querySelector("#importCancel").onclick = dialogClose;
-	document.querySelector("#helpClose").onclick = helpClose;
-	document.querySelector("#helpOpen").onclick = helpOpen;
+	$('#dateFrom').onblur = itemChange1;
+	$('#dateFrom').onchange = itemChange1;
+	$('#princeRank').onblur = itemChange1;
+	$('#princeRank').onchange = itemChange1;
+	$('#aroundMap').onblur = itemChange1;
+	$('#aroundMap').onchange = itemChange1;
+	$('#isAutoRecovery').onblur = itemChangeCheck;
+	$('#isAutoRecovery').onclick = itemChangeCheck;
+	$('#importBtn').onclick = importClick;
+	$('#bgArea').onclick = dialogClose;
+	$('#importOK').onclick = importOK;
+	$('#importCancel').onclick = dialogClose;
+	$('#helpClose').onclick = helpClose;
+	$('#helpOpen').onclick = helpOpen;
 
-	document.querySelector("#nowVal").value = storage.getItem('nowVal');
-	document.querySelector("#targetVal").value = storage.getItem('targetVal');
-	document.querySelector("#princeRank").value = storage.getItem('princeRank');
-	document.querySelector("#aroundMap").value = storage.getItem('aroundMap');
-	document.querySelector("#isAutoRecovery").checked = storage.getItem('isAutoRecovery');
+	$('#nowVal').value = storage.getItem('nowVal');
+	$('#targetVal').value = storage.getItem('targetVal');
+	$('#princeRank').value = storage.getItem('princeRank');
+	$('#aroundMap').value = storage.getItem('aroundMap');
+	$('#isAutoRecovery').checked = storage.getItem('isAutoRecovery');
 
 	var sdate = storage.getItem('dateFrom');
-	document.querySelector("#dateFrom").innerHTML = sdate.replace('-','/');
+	$('#dateFrom').innerHTML = sdate.replace(/-/g,'/');
 	sdate = storage.getItem('dateTo');
-	document.querySelector("#dateTo").innerHTML = sdate.replace('-','/');
+	$('#dateTo').innerHTML = sdate.replace(/-/g,'/');
 
-	document.getElementById("grid");
+	$('#grid');
 	new Handsontable(grid, {
 		data: mapData,
 		colHeaders: mapHeaders,
