@@ -102,42 +102,6 @@ form
     border-radius: 8px;
     padding:0.3em 0.8em;
 }
-.popbox {
-    position: relative;
-    margin: 2em 0;
-    padding: 0.5em 1em;
-    border: solid 3px #95ccff;
-    border-radius: 8px;
-}
-.popbox .box-title {
-    position: absolute;
-    display: inline-block;
-    top: -13px;
-    left: 10px;
-    padding: 0 9px;
-    line-height: 1;
-    font-size: 19px;
-    background: #FFF;
-    color: #95ccff;
-    font-weight: bold;
-}
-.popbox p {
-    margin: 0; 
-    padding: 0;
-}
-.popbox dl dt
-{
-	width:100px;
-	float:left;
-}
-.popbox dl dd
-{
-	margin:0;
-}
-.calcGrid td
-{
-	color:red;
-}
 #exportArea
 {
 	border:1px solid gray;
@@ -167,3 +131,79 @@ form
 	display:none;
 	background-color:rgba(0,0,0,0.5);
 }
+
+.popbox {
+    position: relative;
+    margin: 2em 0;
+    padding: 0.5em 1em;
+    border-radius: 8px;
+}
+.popbox .box-title {
+    position: absolute;
+    display: inline-block;
+    top: -13px;
+    left: 10px;
+    padding: 0 9px;
+    line-height: 1;
+    font-size: 19px;
+    font-weight: bold;
+}
+.popbox p {
+	margin:0;
+    padding: 0;
+}
+.popbox dl
+{
+    margin: 0 0 0.5em 0;
+	padding:0;
+}
+.popbox dl dt
+{
+	float:left;
+	margin:0 20px 0 0;
+	padding:0;
+}
+.popbox dl dd
+{
+	margin:0;
+	padding:0;
+}
+.calcGrid td
+{
+	color:red;
+}
+
+.square_btn {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 8px 10px 5px 10px;
+    text-decoration: none;
+    border-radius: 15px 15px 0 0;
+    transition: .4s;
+}
+
+.contents
+{
+    border-top-style: solid;
+    border-top-width: 4px;
+}
+
+
+.inp {
+    color: #FFA000;
+    background: #fff1da;
+}
+.inp:hover {
+    background: #ffc25c;
+    color: #FFF;
+}
+.calc {
+    color: #00A0FF;
+    background: #daf1ff;
+}
+.calc:hover {
+    background: #5cc2ff;
+    color: #FFF;
+}
+
